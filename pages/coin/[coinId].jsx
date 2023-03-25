@@ -2,7 +2,7 @@ import Layout from "@/components/Layout";
 import { useRouter } from 'next/router'
 import { useEffect, useState } from "react";
 import axios from "axios";
-import dompurify from "dompurify";
+import dompurify from "isomorphic-dompurify";
 import { Sparklines, SparklinesLine } from "react-sparklines";
 import Image from "next/image";
 import { AiFillFacebook, AiFillGithub, AiFillRedditCircle, AiOutlineTwitter } from "react-icons/ai";
