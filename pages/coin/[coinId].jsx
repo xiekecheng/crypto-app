@@ -130,7 +130,6 @@ export default function Coin() {
                   <li><AiFillRedditCircle size={ 30 }/></li>
                   <li><AiFillGithub size={ 30 }/></li>
                 </ul>
-
               </div>
             </div>
           </div>

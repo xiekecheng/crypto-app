@@ -2,18 +2,52 @@ import Image from "next/image";
 import { Sparklines, SparklinesLine } from 'react-sparklines'
 import { AiOutlineStar } from "react-icons/ai";
 import Link from "next/link";
-
+import { useUserContext } from "@/context/UserContext";
+import { addBookmark } from "@/api/coin";
+import { useRouter } from "next/router";
 
 const myLoader = ({src}) => {
   return src
 }
 
-// <Sparklines data={[5, 10, 5, 20]}>
-//   <SparklinesLine color="blue" />
-// </Sparklines>
-
 export default function Example({tableData}) {
+  const {user} = useUserContext()
+  const router = useRouter()
 
+
+  // useEffect(() => {
+  //   console.log('user',user?.email)
+  //   if(user?.email){
+  //     const unsub = onSnapshot(doc(db, "users", user?.email), (doc) => {
+  //     console.log("Current data: ", doc.data().watchlist.join(','));
+  //     const coin = doc.data().watchlist.join(',')
+  //       console.log('coin', coin)
+  //     const url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${coin}&order=market_cap_desc&per_page=5&page=1&sparkline=false`
+  //       axios.get(url).then(res => {
+  //           console.log('res', res)
+  //       })
+  //   });
+  //   }
+  // }, [user?.email]);
+
+
+  const addToBookMark = (id) => {
+
+    if (!user) {
+      // 跳转到登录页
+      router.push('/signin')
+      return
+    }
+
+
+    console.log('id', id)
+    console.log('user', user)
+    addBookmark(id, user.email).then(res => {
+      console.log('res', res)
+
+    })
+
+  };
 
   return (
       <div className="px-4 sm:px-6 lg:px-8">
@@ -99,7 +133,7 @@ export default function Example({tableData}) {
                 { tableData.map((transaction) => (
                     <tr key={ transaction.id }>
                       <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-0">
-                        <AiOutlineStar className='cursor-pointer'/>
+                        <AiOutlineStar className='cursor-pointer' onClick={ () => addToBookMark(transaction.id) }/>
                       </td>
                       <td className="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">
                         { transaction.market_cap_rank }

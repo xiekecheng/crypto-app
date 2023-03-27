@@ -1,4 +1,4 @@
-import { useState, createContext, useEffect } from "react";
+import { useState, createContext, useEffect,useContext } from "react";
 
 const getInitialTheme = () => {
   if (typeof window !== "undefined" && window.localStorage) {
@@ -18,6 +18,9 @@ const getInitialTheme = () => {
 }
 
 export const ThemeContext = createContext(null);
+export const useThemeContext = ()=>{
+  return useContext(ThemeContext)
+}
 
 export const ThemeProvider = ({ initialTheme, children }) => {
   const [theme, setTheme] = useState(getInitialTheme);
